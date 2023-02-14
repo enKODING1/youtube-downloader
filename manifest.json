@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Youtube Downloader",
+  "description": "Download YouTube music in bulk",
+  "version": "1.0",
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "./images/logo.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*.youtube.com/*"],
+      "js": ["./scripts/content.js"]
+    }
+  ]
+}
