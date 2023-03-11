@@ -1,0 +1,17 @@
+body{
+    width: 300px;
+    height: 400px;
+}
+
+.content{
+    
+     
+    margin-top: 10px;
+    padding: 5px;
+
+}
+
+.item-wrap{
+    border: 1px solid rgba(0,0,0,0.5);
+    margin-bottom: 5px;
+}
