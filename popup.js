@@ -6,6 +6,7 @@ function renderItem(url, title) {
           ${title}
       </a>
   </p>
+  
 </div>
   `;
 
@@ -14,33 +15,41 @@ function renderItem(url, title) {
 
 
 window.onload = () => {
-  const add = document.querySelector(".add");
-  const content = document.querySelector(".content");
+  const add = document.querySelector(".add"); // add 버튼 
+  const content = document.querySelector(".content"); // content 를 담고 있는 element
 
 
-  add.onclick = () => {
-    console.log("click");
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id, { message: "add" });
-    });
+  add.onclick = async () => {
+    const queryOptions = { active: true, currentWindow: true };
+    
+    const tabs = await chrome.tabs.query(queryOptions);
+    await chrome.tabs.sendMessage(tabs[0].id , {message:'add'});
+  
+   
   };
 
-/**
- * TODO: - tabs id 업데이트 저장하기 
- *    
- */
-
+ 
 
 
   chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
    
-     
-      if(message === "error"){ return ; };
-
-      let stack =await chrome.storage.local.get("stack").then(result=>{return result.stack}) || [];
-      console.log(stack.length);
-      console.log('end');
       
+      if(message === "error" || typeof message == 'object'){ return ; };
+
+      let stack = await chrome.storage.local.get("stack").then(result=>{return result.stack}) || [];
+      /* 
+       - stack에 제대로 쌓이는지 체크 
+       
+       console.log(stack.length);
+       console.log('end');
+      */  
+    
+      content.innerHTML = '';
+      
+      for(let data of stack){
+       content.innerHTML += renderItem(data.url , data.title);
+      } 
+
     }
   );
 

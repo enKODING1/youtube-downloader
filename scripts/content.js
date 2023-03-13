@@ -6,7 +6,7 @@ chrome.runtime.onMessage.addListener(async (message, sender , sendResponse)=>{
     
 
     if(message.message === 'add'){
-        console.log("================")
+ 
         const title = document.querySelector('.ytd-watch-metadata h1').innerText;
         const url = location.href;
         
